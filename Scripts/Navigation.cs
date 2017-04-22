@@ -18,14 +18,13 @@ using Sandbox;
 namespace Navigation {
     class Program : MyGridProgram {
 
-        #region export to game
+        #region Navigation
 
         long selectedEntityId = -1;
         MyDetectedEntityInfo chosenTarget;
 
         //calculated statistics
-        Vector3 lastFacing = Vector3.Zero;
-        float angularAcceleration = 1000; //initially use huge value
+        //Vector3 lastFacing = Vector3.Zero;
 
         // gyroscopes
         List<IMyGyro> gyros = new List<IMyGyro>();
@@ -34,7 +33,7 @@ namespace Navigation {
         /// </summary>
         /// <param name="argument"></param>
         public void Main( string argument ) {
-
+            
             if(argument.StartsWith( "SelectTarget" )) {
                 selectedEntityId = long.Parse( argument.Substring( 12 ) );
             }
@@ -45,28 +44,44 @@ namespace Navigation {
                     chosenTarget = mdei;
             }
 
-
             Vector3 facing = Me.CubeGrid.GridIntegerToWorld( Me.Position + Base6Directions.GetIntVector(Me.Orientation.Forward) ) - Me.CubeGrid.GridIntegerToWorld(Me.Position);
-            if(lastFacing == Vector3.Zero)
+            /*if(lastFacing == Vector3.Zero)
                 lastFacing = facing;
-            Vector3 rotSpeed = lastFacing.Cross( facing );
-
-
+            Vector3 rotSpeed = lastFacing.Cross( facing );*/
 
             Vector3 desiredSpeed;
 
             if(chosenTarget.IsEmpty()) {
-                desiredSpeed = -lastFacing;
+                desiredSpeed = Vector3.Zero;
             } else {
-                Vector3 direction = chosenTarget.Position - Me.CubeGrid.GridIntegerToWorld( Me.Position );
-
+                Vector3 targetDirection = chosenTarget.Position - Me.CubeGrid.GridIntegerToWorld( Me.Position );
+                desiredSpeed = facing.Cross( targetDirection );
+                //desiredSpeed = desiredDir - rotSpeed;
+                //Echo( string.Format( "Facing: {0} TargetDir:{1}", facing, targetDirection ) );
+                Echo( string.Format( "Desired speed: {0}", desiredSpeed ));
+            }
+            
+            GridTerminalSystem.GetBlocksOfType<IMyGyro>( gyros );
+            foreach(var gyro in gyros) {
+                try {
+                    //gyro.ApplyAction( "Override" );
+                    gyro.SetValueBool( "Override", true );
+                    //gyro.SetValueFloat
+                    Vector3 gyroPos = Me.CubeGrid.GridIntegerToWorld( gyro.Position );
+                    // forward vector
+                    Vector3 forward = Me.CubeGrid.GridIntegerToWorld( gyro.Position + Base6Directions.GetIntVector( gyro.Orientation.Forward ) ) - gyroPos;
+                    Vector3 left = Me.CubeGrid.GridIntegerToWorld( gyro.Position + Base6Directions.GetIntVector( gyro.Orientation.Left ) ) - gyroPos;
+                    Vector3 up = Me.CubeGrid.GridIntegerToWorld( gyro.Position + Base6Directions.GetIntVector( gyro.Orientation.Up ) ) - gyroPos;
+                    gyro.SetValueFloat( "Roll", forward.Dot( desiredSpeed ) );
+                    gyro.SetValueFloat( "Yaw", left.Dot( desiredSpeed ) );
+                    gyro.SetValueFloat( "Pitch", up.Dot( desiredSpeed ) );
+                } catch(Exception e) { Echo( e.StackTrace ); }
             }
 
 
-
-            Echo("Target: "+selectedEntityId);
+            /*Echo("Target: "+selectedEntityId);
             if(!chosenTarget.IsEmpty())
-                Echo( "Position: " + chosenTarget.Position );
+                Echo( "Position: " + chosenTarget.Position );*/
 
         }
         

@@ -47,6 +47,52 @@
     <Compile Include="TargetControl.cs" />
     <Compile Include="Tracking.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sources\Sandbox.Common\Sandbox.Common.csproj">
+      <Project>{2c96f0ab-7962-4b73-a075-b0e0b09f6195}</Project>
+      <Name>Sandbox.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\Sandbox.Game\Sandbox.Game.csproj">
+      <Project>{f77d0a49-f0a1-4e8a-80c8-cbe1842bf2d4}</Project>
+      <Name>Sandbox.Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\Sandbox.Graphics\Sandbox.Graphics.csproj">
+      <Project>{f77d0a49-f0a1-4e8a-80c8-cbe1842ba2d4}</Project>
+      <Name>Sandbox.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\SpaceEngineers.Dedicated\SpaceEngineers.Dedicated.csproj">
+      <Project>{0e3c8169-55fc-4afa-88ab-f0c0488afeba}</Project>
+      <Name>SpaceEngineers.Dedicated</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\SpaceEngineers.Game\SpaceEngineers.Game.csproj">
+      <Project>{9f620aab-5008-4d91-8d8f-8be6cf26f926}</Project>
+      <Name>SpaceEngineers.Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\SpaceEngineers.ObjectBuilders\SpaceEngineers.ObjectBuilders.csproj">
+      <Project>{e48feb99-6814-4947-8035-8c2b4066dd9b}</Project>
+      <Name>SpaceEngineers.ObjectBuilders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\SpaceEngineers\SpaceEngineers.csproj">
+      <Project>{5cd034c8-a242-4bd6-94f4-f20c655a69e8}</Project>
+      <Name>SpaceEngineers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\VRage.Game\VRage.Game.csproj">
+      <Project>{4539b5f0-3316-40e6-b032-9fbcafaac5be}</Project>
+      <Name>VRage.Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\VRage.Input\VRage.Input.csproj">
+      <Project>{f77d0a49-f0a1-4e8a-80c8-cbf1842bf2d4}</Project>
+      <Name>VRage.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\VRage.Library\VRage.Library.csproj">
+      <Project>{26fe022e-42ab-40be-ba9d-97cbe34e7d99}</Project>
+      <Name>VRage.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sources\VRage.Math\VRage.Math.csproj">
+      <Project>{40ce67d5-c89f-4a56-ae52-85db1bea07fe}</Project>
+      <Name>VRage.Math</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

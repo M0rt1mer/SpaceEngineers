@@ -167,9 +167,6 @@ namespace Tracking {
 
                 }
 
-
-
-                
                 //update
                 foreach(var signal in trackedEntities.Values)
                     if(signal.TimeStamp < currentTimestamp)
